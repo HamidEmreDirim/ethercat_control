@@ -6,7 +6,7 @@ from menu_bar import create_menu_bar
 
 def create_main_window():
     ctk.set_appearance_mode("System")  
-    ctk.set_default_color_theme("/Users/emre/Downloads/CTkThemesPack-main/themes/red.json")
+    ctk.set_default_color_theme("./themes/red.json")
 
     # 1) Motor manager'ı başlat
     motor_controller.init_motor_manager()
@@ -71,7 +71,7 @@ def create_main_window():
         config.config_labels[f"velocity_config_label_{i+1}"] = ctk.CTkLabel(
             sub_frame_velocity, 
             text="UNCONFIGURED",
-            font=("Arial", 8, "bold"),
+            font=("Arial", 13, "bold"),
             text_color="red"
         )
         config.config_labels[f"velocity_config_label_{i+1}"].pack(pady=2)
@@ -91,16 +91,16 @@ def create_main_window():
         labels_frame_v.pack(pady=3, fill="x")
         labels_frame_v.columnconfigure((0,1), weight=1)
 
-        config.info_labels[f"velocity_load_{i+1}"] = ctk.CTkLabel(labels_frame_v, text="Load:", font=("Arial", 11))
+        config.info_labels[f"velocity_load_{i+1}"] = ctk.CTkLabel(labels_frame_v, text="Load:", font=("Arial", 13))
         config.info_labels[f"velocity_load_{i+1}"].grid(row=0, column=0, padx=5, pady=2, sticky="w")
 
-        config.info_labels[f"velocity_position_{i+1}"] = ctk.CTkLabel(labels_frame_v, text="Position:", font=("Arial", 11))
+        config.info_labels[f"velocity_position_{i+1}"] = ctk.CTkLabel(labels_frame_v, text="Position:", font=("Arial", 13))
         config.info_labels[f"velocity_position_{i+1}"].grid(row=0, column=1, padx=5, pady=2, sticky="w")
 
-        config.info_labels[f"velocity_velocity_{i+1}"] = ctk.CTkLabel(labels_frame_v, text="Velocity:", font=("Arial", 11))
+        config.info_labels[f"velocity_velocity_{i+1}"] = ctk.CTkLabel(labels_frame_v, text="Velocity:", font=("Arial", 13))
         config.info_labels[f"velocity_velocity_{i+1}"].grid(row=1, column=0, padx=5, pady=2, sticky="w")
 
-        config.info_labels[f"velocity_torque_{i+1}"] = ctk.CTkLabel(labels_frame_v, text="Torque:", font=("Arial", 11))
+        config.info_labels[f"velocity_torque_{i+1}"] = ctk.CTkLabel(labels_frame_v, text="Torque:", font=("Arial", 13))
         config.info_labels[f"velocity_torque_{i+1}"].grid(row=1, column=1, padx=5, pady=2, sticky="w")
 
         logs_frame_v = ctk.CTkFrame(sub_frame_velocity, corner_radius=10)
@@ -144,7 +144,7 @@ def create_main_window():
         config.config_labels[f"position_config_label_{i+1}"] = ctk.CTkLabel(
             sub_frame_position,
             text="UNCONFIGURED",
-            font=("Arial", 8, "bold"),
+            font=("Arial", 13, "bold"),
             text_color="red"
         )
         config.config_labels[f"position_config_label_{i+1}"].pack(pady=2)
@@ -164,16 +164,16 @@ def create_main_window():
         labels_frame_p.pack(pady=3, fill="x")
         labels_frame_p.columnconfigure((0,1), weight=1)
 
-        config.info_labels[f"position_load_{i+1}"] = ctk.CTkLabel(labels_frame_p, text="Load:", font=("Arial", 11))
+        config.info_labels[f"position_load_{i+1}"] = ctk.CTkLabel(labels_frame_p, text="Load:", font=("Arial", 13))
         config.info_labels[f"position_load_{i+1}"].grid(row=0, column=0, padx=5, pady=2, sticky="w")
 
-        config.info_labels[f"position_position_{i+1}"] = ctk.CTkLabel(labels_frame_p, text="Position:", font=("Arial", 11))
+        config.info_labels[f"position_position_{i+1}"] = ctk.CTkLabel(labels_frame_p, text="Position:", font=("Arial", 13))
         config.info_labels[f"position_position_{i+1}"].grid(row=0, column=1, padx=5, pady=2, sticky="w")
 
-        config.info_labels[f"position_velocity_{i+1}"] = ctk.CTkLabel(labels_frame_p, text="Velocity:", font=("Arial", 11))
+        config.info_labels[f"position_velocity_{i+1}"] = ctk.CTkLabel(labels_frame_p, text="Velocity:", font=("Arial", 13))
         config.info_labels[f"position_velocity_{i+1}"].grid(row=1, column=0, padx=5, pady=2, sticky="w")
 
-        config.info_labels[f"position_torque_{i+1}"] = ctk.CTkLabel(labels_frame_p, text="Torque:", font=("Arial", 11))
+        config.info_labels[f"position_torque_{i+1}"] = ctk.CTkLabel(labels_frame_p, text="Torque:", font=("Arial", 13))
         config.info_labels[f"position_torque_{i+1}"].grid(row=1, column=1, padx=5, pady=2, sticky="w")
 
         logs_frame_p = ctk.CTkFrame(sub_frame_position, corner_radius=10)
