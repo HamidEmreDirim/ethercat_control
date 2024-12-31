@@ -184,11 +184,11 @@ def open_parameter_visualisation(shared_data):
             table.insert("", "end", values=("Voltage of Control Power", data.get("Voltage_of_Control_Power", 0)))
             table.insert("", "end", values=("Output Voltage", data.get("Output_Voltage", 0)))
             table.insert("", "end", values=("Output Current", data.get("Output_Current", 0)))
-            table.insert("", "end", values=("Drive Temperature", data.get("Drive_Temperature", 0)))
+            table.insert("", "end", values=("Drive Temperature (°C)", data.get("Drive_Temperature", 0)))
 
             elems["canvas"].draw()
 
-        visualisation_window.after(100, update_graphs)
+        visualisation_window.after(200, update_graphs)
 
     update_graphs()
 

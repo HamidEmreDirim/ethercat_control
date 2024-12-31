@@ -59,7 +59,7 @@ def on_motor_slider_change(slider_value, idx):
         motor_manager.set_velocity(idx, slider_value_int)
 
 def poll_data(root):
-    # poll_data fonksiyonu, her 100 ms'de bir verileri okuyacak
+    
     if config.config_complete and motor_manager is not None:
         for motor_type in ["velocity", "position"]:
             for i in range(1,5):
@@ -107,4 +107,4 @@ def poll_data(root):
                     print(f"Error reading parameters for slave {slave_idx}: {e}")
 
     # Tekrar schedule
-    root.after(100, lambda: poll_data(root))
+    root.after(200, lambda: poll_data(root))

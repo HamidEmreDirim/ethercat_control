@@ -22,7 +22,6 @@ state_meanings = {
     6: "STO-In"
 }
 
-# shared_data, config_labels, motor_sliders, logs, etc. gibi dict'leri de burada tutabilirsiniz:
 shared_data = {
     "slave-0": {}, "slave-1": {}, "slave-2": {}, "slave-3": {},
     "slave-4": {}, "slave-5": {}, "slave-6": {}, "slave-7": {}
