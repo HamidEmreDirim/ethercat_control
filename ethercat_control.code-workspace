@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "ethercat_control",
+			"path": "."
+		},
+		{
+			"name": "themes",
+			"path": "../../Downloads/CTkThemesPack-main/themes"
+		}
+	],
+	"settings": {}
+}
