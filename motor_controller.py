@@ -1,12 +1,14 @@
 # motor_controller.py
 import config
 from motor_manager import MotorManager
+from collections import defaultdict, deque
 
 motor_manager = None  # Burada global tanımlıyoruz, try/except ile init edeceğiz.
 
 # ------------- [YENİ EKLENDİ] -------------
-# Slider'dan gelen değerleri tutacağımız tampon sözlük
-pending_slider_values = {}  # {motor_idx: en_son_slider_degeri}
+# Slider'dan gelen değerleri tutacağımız kuyruk yapısı
+# Her motor için ayrı bir deque tutuyoruz.
+slider_queues = defaultdict(deque)  # {motor_idx: deque([...])}
 # ------------------------------------------
 
 def init_motor_manager():
@@ -52,7 +54,7 @@ def start_config():
 # -------------------------------------------------------------------------
 # Aşağıdaki fonksiyonda "SLIDER" ile ilgili kısım değiştirilmiştir.
 # Eskiden burada anında set_position/set_velocity çağrısı vardı.
-# Artık sadece pending_slider_values sözlüğüne değer kaydediyoruz.
+# Artık slider_queues yapısına değer ekliyoruz.
 # -------------------------------------------------------------------------
 def on_motor_slider_change(slider_value, idx):
     if not config.config_complete or motor_manager is None:
@@ -60,17 +62,14 @@ def on_motor_slider_change(slider_value, idx):
 
     slider_value_int = int(slider_value)
     if idx in [0, 2, 4, 6]:  # position motor
-        # Log penceresine, "gönderildi" yerine "queued" benzeri ifade yazıyoruz
         config.logs[str(idx)].insert("end", f"Position value of {slider_value_int} queued\n")
         config.logs[str(idx)].see("end")
-        # Anında göndermek yerine tampon sözlüğüne yaz
-        pending_slider_values[idx] = slider_value_int
-
-    else:  # velocity motor
+    else:
         config.logs[str(idx)].insert("end", f"Velocity value of {slider_value_int} queued\n")
         config.logs[str(idx)].see("end")
-        # Anında göndermek yerine tampon sözlüğüne yaz
-        pending_slider_values[idx] = slider_value_int
+
+    # Kuyruğa yeni değeri ekle (en son değer her zaman kuyruğun sonunda)
+    slider_queues[idx].append(slider_value_int)
 
 # -------------------------------------------------------------------------
 # YENİ EKLENEN Fonksiyon:
@@ -78,31 +77,30 @@ def on_motor_slider_change(slider_value, idx):
 # -------------------------------------------------------------------------
 def update_motors():
     """
-    Belirli aralıklarla (ör. 100ms) çağrılıp pending_slider_values içindeki
-    değerleri motor sürücüye gönderir.
+    Belirli aralıklarla (ör. 100ms) çağrılarak slider_queues içindeki
+    değerleri motor sürücüye gönderir. Her motor için sadece kuyruğun
+    sonundaki (en güncel) değer gönderilir.
     """
     if config.config_complete and motor_manager is not None:
-        for idx, val in list(pending_slider_values.items()):
-            # Pozisyon motoru mu, hız motoru mu bakıyoruz
+        for idx, q in list(slider_queues.items()):
+            if not q:
+                continue
+            # Kuyrukta birden fazla değer varsa sadece sonuncusunu kullan
+            last_val = q.pop()
+            q.clear()
             if idx in [0, 2, 4, 6]:
-                # Orijinal koddaki gibi 0 veya 6 ise negatif çevirme
-                send_val = -val if idx in [0, 6] else val
+                send_val = -last_val if idx in [0, 6] else last_val
                 motor_manager.set_position(idx, send_val)
-
-                # Gönderildiğini de log'a yazabiliriz:
                 config.logs[str(idx)].insert(
                     "end", f"Position value {send_val} has been sent to motor {idx}\n"
                 )
                 config.logs[str(idx)].see("end")
             else:
-                motor_manager.set_velocity(idx, val)
+                motor_manager.set_velocity(idx, last_val)
                 config.logs[str(idx)].insert(
-                    "end", f"Velocity value {val} has been sent to motor {idx}\n"
+                    "end", f"Velocity value {last_val} has been sent to motor {idx}\n"
                 )
                 config.logs[str(idx)].see("end")
-
-        # Tüm tampon temizlenir
-        pending_slider_values.clear()
 
 def poll_data(root):
     # poll_data fonksiyonu, her 100 ms'de bir verileri okuyacak (ESKİ HALİYLE KALDI)
