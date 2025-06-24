@@ -21,7 +21,8 @@ def create_main_window():
     x_pos = (screen_w - window_w) // 2
     y_pos = (screen_h - window_h) // 2
     root.geometry(f"{window_w}x{window_h}+{x_pos}+{y_pos}")
-    root.resizable(True, True)
+    # Arayüzün boyutu gelen verilere bağlı olarak değişmesin
+    root.resizable(False, False)
 
     # Üst menü
     menu_bar = create_menu_bar(root, config.shared_data)
@@ -69,11 +70,11 @@ def create_main_window():
         toggle_switch_v.pack(side=ctk.LEFT, padx=5)
 
         config.config_labels[f"velocity_config_label_{i+1}"] = ctk.CTkLabel(
-            sub_frame_velocity, 
+            sub_frame_velocity,
             text="UNCONFIGURED",
             font=("Arial", 12, "bold"),
-
-            text_color="red"
+            text_color="red",
+            width=150
         )
         config.config_labels[f"velocity_config_label_{i+1}"].pack(pady=2)
 
@@ -109,16 +110,36 @@ def create_main_window():
         labels_frame_v.pack(pady=3, fill="x")
         labels_frame_v.columnconfigure((0,1), weight=1)
 
-        config.info_labels[f"velocity_load_{i+1}"] = ctk.CTkLabel(labels_frame_v, text="Load:", font=("Arial", 13))
+        config.info_labels[f"velocity_load_{i+1}"] = ctk.CTkLabel(
+            labels_frame_v,
+            text="Load:",
+            font=("Arial", 13),
+            width=150
+        )
         config.info_labels[f"velocity_load_{i+1}"].grid(row=0, column=0, padx=5, pady=2, sticky="w")
 
-        config.info_labels[f"velocity_position_{i+1}"] = ctk.CTkLabel(labels_frame_v, text="Position:", font=("Arial", 13))
+        config.info_labels[f"velocity_position_{i+1}"] = ctk.CTkLabel(
+            labels_frame_v,
+            text="Position:",
+            font=("Arial", 13),
+            width=150
+        )
         config.info_labels[f"velocity_position_{i+1}"].grid(row=0, column=1, padx=5, pady=2, sticky="w")
 
-        config.info_labels[f"velocity_velocity_{i+1}"] = ctk.CTkLabel(labels_frame_v, text="Velocity:", font=("Arial", 13))
+        config.info_labels[f"velocity_velocity_{i+1}"] = ctk.CTkLabel(
+            labels_frame_v,
+            text="Velocity:",
+            font=("Arial", 13),
+            width=150
+        )
         config.info_labels[f"velocity_velocity_{i+1}"].grid(row=1, column=0, padx=5, pady=2, sticky="w")
 
-        config.info_labels[f"velocity_torque_{i+1}"] = ctk.CTkLabel(labels_frame_v, text="Torque:", font=("Arial", 13))
+        config.info_labels[f"velocity_torque_{i+1}"] = ctk.CTkLabel(
+            labels_frame_v,
+            text="Torque:",
+            font=("Arial", 13),
+            width=150
+        )
         config.info_labels[f"velocity_torque_{i+1}"].grid(row=1, column=1, padx=5, pady=2, sticky="w")
 
         logs_frame_v = ctk.CTkFrame(sub_frame_velocity, corner_radius=10)
@@ -163,7 +184,8 @@ def create_main_window():
             sub_frame_position,
             text="UNCONFIGURED",
             font=("Arial", 12, "bold"),
-            text_color="red"
+            text_color="red",
+            width=150
         )
         config.config_labels[f"position_config_label_{i+1}"].pack(pady=2)
 
@@ -198,16 +220,36 @@ def create_main_window():
         labels_frame_p.pack(pady=3, fill="x")
         labels_frame_p.columnconfigure((0,1), weight=1)
 
-        config.info_labels[f"position_load_{i+1}"] = ctk.CTkLabel(labels_frame_p, text="Load:", font=("Arial", 13))
+        config.info_labels[f"position_load_{i+1}"] = ctk.CTkLabel(
+            labels_frame_p,
+            text="Load:",
+            font=("Arial", 13),
+            width=150
+        )
         config.info_labels[f"position_load_{i+1}"].grid(row=0, column=0, padx=5, pady=2, sticky="w")
 
-        config.info_labels[f"position_position_{i+1}"] = ctk.CTkLabel(labels_frame_p, text="Position:", font=("Arial", 13))
+        config.info_labels[f"position_position_{i+1}"] = ctk.CTkLabel(
+            labels_frame_p,
+            text="Position:",
+            font=("Arial", 13),
+            width=150
+        )
         config.info_labels[f"position_position_{i+1}"].grid(row=0, column=1, padx=5, pady=2, sticky="w")
 
-        config.info_labels[f"position_velocity_{i+1}"] = ctk.CTkLabel(labels_frame_p, text="Velocity:", font=("Arial", 13))
+        config.info_labels[f"position_velocity_{i+1}"] = ctk.CTkLabel(
+            labels_frame_p,
+            text="Velocity:",
+            font=("Arial", 13),
+            width=150
+        )
         config.info_labels[f"position_velocity_{i+1}"].grid(row=1, column=0, padx=5, pady=2, sticky="w")
 
-        config.info_labels[f"position_torque_{i+1}"] = ctk.CTkLabel(labels_frame_p, text="Torque:", font=("Arial", 13))
+        config.info_labels[f"position_torque_{i+1}"] = ctk.CTkLabel(
+            labels_frame_p,
+            text="Torque:",
+            font=("Arial", 13),
+            width=150
+        )
         config.info_labels[f"position_torque_{i+1}"].grid(row=1, column=1, padx=5, pady=2, sticky="w")
 
         logs_frame_p = ctk.CTkFrame(sub_frame_position, corner_radius=10)
