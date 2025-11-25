@@ -13,12 +13,9 @@ slider_queues = defaultdict(deque)  # {motor_idx: deque([...])}
 
 def init_motor_manager():
     global motor_manager
-    try:
-        motor_manager = MotorManager(interface_name='enp3s0')
-        motor_manager.initialize()
-    except Exception as e:
-        print(f"Error initializing EtherCAT network: {e}")
-        motor_manager = None
+    # Let exceptions propagate to the caller (server.py)
+    motor_manager = MotorManager(interface_name='enp3s0')
+    motor_manager.initialize()
 
 def calculate_torque(torque):
     torque = float(torque)
@@ -36,6 +33,8 @@ def handle_switch(switch_var, switch_type):
     print(f"Updated Status: {config.switch_status}")
 
 def start_config():
+    if motor_manager is None:
+        init_motor_manager()
     config.config_complete = True
     for key, value in config.switch_status.items():
         if value == 1:

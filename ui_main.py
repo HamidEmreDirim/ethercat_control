@@ -9,7 +9,7 @@ def create_main_window():
     ctk.set_default_color_theme("./themes/red.json")
 
     # 1) Motor manager'ı başlat
-    motor_controller.init_motor_manager()
+    # motor_controller.init_motor_manager()  <-- REMOVED: Deferred to Start button
 
     root = ctk.CTk()
     root.title("UI Design")
@@ -25,8 +25,8 @@ def create_main_window():
     root.resizable(False, False)
 
     # Üst menü
-    menu_bar = create_menu_bar(root, config.shared_data)
-    menu_bar.pack(fill=ctk.X)
+    # menu_bar = create_menu_bar(root, config.shared_data)
+    # menu_bar.pack(fill=ctk.X)
 
     main_frame = ctk.CTkFrame(root, corner_radius=10)
     main_frame.pack(fill="both", expand=True, padx=10, pady=10)
